@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bupxvc1c2trh7"]
+
+[ext_resource type="Texture2D" uid="uid://cjdoor6wr4awu" path="res://art/character/ansisit drw.png" id="1_vjhin"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vjhin"]
+radius = 8.0
+
+[node name="Lola" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -9.536743e-07)
+scale = Vector2(0.08052435, 0.080524355)
+texture = ExtResource("1_vjhin")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("CircleShape2D_vjhin")

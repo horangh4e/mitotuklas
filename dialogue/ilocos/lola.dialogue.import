@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://crofrx2j8db6h"
+path="res://.godot/imported/lola.dialogue-227122fd91edcd94006567e54775bcf5.tres"
+
+[deps]
+
+source_file="res://dialogue/ilocos/lola.dialogue"
+dest_files=["res://.godot/imported/lola.dialogue-227122fd91edcd94006567e54775bcf5.tres"]
+
+[params]
+
+defaults=true

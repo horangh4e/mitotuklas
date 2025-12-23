@@ -1,0 +1,84 @@
+[gd_scene load_steps=4 format=3 uid="uid://cblg6yraw3m3h"]
+
+[ext_resource type="Texture2D" uid="uid://cxvjcwkpapk2b" path="res://art/menu/temporary.png" id="1_3er1b"]
+[ext_resource type="PackedScene" path="res://scene/fade_transition.tscn" id="2_hxu56"]
+
+[sub_resource type="GDScript" id="GDScript_m4svf"]
+script/source = "extends Node2D
+
+var button_type = null
+
+func _on_new_game_pressed() -> void:
+	button_type = \"New game\"
+	$Fade_transition.show()
+	$Fade_transition/Timer.start()
+	$Fade_transition/AnimationPlayer.play(\"fade_in\")
+
+func _on_load_game_pressed() -> void:
+	button_type = \"Load game\"
+	$Fade_transition.show()
+	$Fade_transition/Timer.start()
+	$Fade_transition/AnimationPlayer.play(\"fade_in\")
+
+func _on_quit_pressed() -> void:
+	get_tree().quit()
+	
+func _on_timer_timeout() -> void:
+	if button_type == \"New game\" :
+		get_tree().change_scene_to_file(\"res://scene/ilocos.tscn\")
+			
+	elif button_type == \"Load game\" :
+		get_tree().change_scene_to_file(\"res://scene/ilocos.tscn\")
+"
+
+[node name="main menu" type="Node2D"]
+script = SubResource("GDScript_m4svf")
+
+[node name="Temporary" type="Sprite2D" parent="."]
+position = Vector2(576.11115, 324.5)
+scale = Vector2(0.5990741, 0.5990741)
+texture = ExtResource("1_3er1b")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="New Game" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 643.0
+offset_top = 174.0
+offset_right = 943.0
+offset_bottom = 250.0
+text = "New Game"
+
+[node name="Load Game" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 642.0
+offset_top = 261.0
+offset_right = 943.0
+offset_bottom = 333.0
+text = "Load Game"
+
+[node name="Quit" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 642.0
+offset_top = 345.0
+offset_right = 945.0
+offset_bottom = 427.0
+text = "Quit"
+
+[node name="Fade_transition" parent="." instance=ExtResource("2_hxu56")]
+visible = false
+offset_left = -1.0
+offset_top = 1.0
+offset_right = 1151.0
+offset_bottom = 651.0
+
+[node name="Timer" type="Timer" parent="Fade_transition"]
+
+[connection signal="pressed" from="Control/New Game" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="Control/Load Game" to="." method="_on_load_game_pressed"]
+[connection signal="pressed" from="Control/Quit" to="." method="_on_quit_pressed"]
+[connection signal="timeout" from="Fade_transition/Timer" to="." method="_on_timer_timeout"]
