@@ -5,7 +5,7 @@
 [sub_resource type="GDScript" id="GDScript_sh265"]
 script/source = "extends CharacterBody2D
 
-var speed = 50
+var speed = 100
 
 var player_state
 
@@ -224,11 +224,11 @@ animations = [{
 "speed": 4.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_onrkg"]
-radius = 2.236068
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_dnjla"]
 radius = 6.0827627
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_onrkg"]
+radius = 2.236068
 
 [node name="player" type="CharacterBody2D"]
 script = SubResource("GDScript_sh265")
@@ -237,11 +237,8 @@ script = SubResource("GDScript_sh265")
 position = Vector2(0, 1)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_5tmop")
-animation = &"nw-walk"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 3)
-shape = SubResource("CircleShape2D_onrkg")
+animation = &"s-walk"
+frame_progress = 0.7305141
 
 [node name="Direction" type="Marker2D" parent="."]
 
@@ -250,5 +247,11 @@ collision_layer = 0
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Direction/ActionableFinder"]
+visible = false
 position = Vector2(0, 1)
 shape = SubResource("CircleShape2D_dnjla")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 3)
+shape = SubResource("CircleShape2D_onrkg")
