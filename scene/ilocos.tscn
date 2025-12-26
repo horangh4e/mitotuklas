@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://cneu7ht1chq36"]
+[gd_scene load_steps=17 format=3 uid="uid://cneu7ht1chq36"]
 
 [ext_resource type="PackedScene" uid="uid://c70awj5gjqkco" path="res://characters/player.tscn" id="1_fmdka"]
 [ext_resource type="Texture2D" uid="uid://car8uo5i67jhu" path="res://art/environment/punyworld-overworld-tileset.png" id="2_lht1b"]
+[ext_resource type="PackedScene" uid="uid://dypo0ck0ketqp" path="res://book/book.tscn" id="2_vbxb5"]
 [ext_resource type="Texture2D" uid="uid://cf4fa8lgfopeh" path="res://art/environment/Interior.png" id="3_7govl"]
 [ext_resource type="PackedScene" uid="uid://dpp0biteryt2p" path="res://scene/Fade_transition.tscn" id="4_7djku"]
 
@@ -10,6 +11,10 @@ script/source = "extends Node2D
 
 func _ready():
 	$Fade_transition/AnimationPlayer.play(\"fade_out\")
+
+
+func _on_timer_timeout() -> void:
+	pass # Replace with function body.
 "
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7djku"]
@@ -1173,5 +1178,16 @@ shape = SubResource("CircleShape2D_vbxb5")
 [node name="Fade_transition" parent="." instance=ExtResource("4_7djku")]
 visible = false
 
+[node name="Timer" type="Timer" parent="Fade_transition"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="book" parent="CanvasLayer" instance=ExtResource("2_vbxb5")]
+offset_left = 8.0
+offset_top = 64.0
+offset_right = 8.0
+offset_bottom = 64.0
+
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
 [connection signal="body_exited" from="Area2D" to="Area2D" method="_on_body_exited"]
+[connection signal="timeout" from="Fade_transition/Timer" to="." method="_on_timer_timeout"]

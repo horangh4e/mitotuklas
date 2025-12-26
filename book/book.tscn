@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://dypo0ck0ketqp"]
+
+[ext_resource type="Script" uid="uid://c42bvqdidex57" path="res://book/book.gd" id="1_f8mea"]
+[ext_resource type="Texture2D" uid="uid://cplj4otomg36a" path="res://book/book.png" id="1_iifmb"]
+[ext_resource type="Texture2D" uid="uid://ds1ys3s2d4slt" path="res://book/button right.png" id="2_f8mea"]
+[ext_resource type="Texture2D" uid="uid://c55u1cb73k61a" path="res://book/button left.png" id="3_sxoxm"]
+
+[node name="book" type="Control"]
+process_mode = 3
+z_index = 10
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+script = ExtResource("1_f8mea")
+
+[node name="page_display" type="TextureRect" parent="."]
+layout_mode = 0
+offset_top = -56.0
+offset_right = 4107.9365
+offset_bottom = 2254.7144
+scale = Vector2(0.27999997, 0.27999997)
+texture = ExtResource("1_iifmb")
+
+[node name="button_next" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 759.00006
+offset_top = 367.00003
+offset_right = 2679.0
+offset_bottom = 1447.0
+scale = Vector2(0.100960374, 0.100960374)
+texture_normal = ExtResource("2_f8mea")
+
+[node name="button_previous" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 199.0
+offset_top = 367.00003
+offset_right = 2119.0
+offset_bottom = 1447.0
+scale = Vector2(0.10080064, 0.10080064)
+texture_normal = ExtResource("3_sxoxm")

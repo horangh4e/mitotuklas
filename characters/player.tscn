@@ -5,7 +5,7 @@
 [sub_resource type="GDScript" id="GDScript_sh265"]
 script/source = "extends CharacterBody2D
 
-var speed = 100
+var speed = 25
 
 var player_state
 
