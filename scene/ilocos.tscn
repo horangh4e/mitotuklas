@@ -10,11 +10,13 @@
 script/source = "extends Node2D
 
 func _ready():
+	$Fade_transition.show()
+	$Fade_transition/Timer.start()
 	$Fade_transition/AnimationPlayer.play(\"fade_out\")
 
 
 func _on_timer_timeout() -> void:
-	pass # Replace with function body.
+	pass
 "
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7djku"]
@@ -1039,6 +1041,7 @@ radius = 11.0
 script = SubResource("GDScript_vbxb5")
 
 [node name="player" parent="." instance=ExtResource("1_fmdka")]
+z_index = 6
 position = Vector2(8, 64)
 
 [node name="Camera2D" type="Camera2D" parent="player"]
@@ -1175,11 +1178,6 @@ script = SubResource("GDScript_7djku")
 position = Vector2(88, -71)
 shape = SubResource("CircleShape2D_vbxb5")
 
-[node name="Fade_transition" parent="." instance=ExtResource("4_7djku")]
-visible = false
-
-[node name="Timer" type="Timer" parent="Fade_transition"]
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="book" parent="CanvasLayer" instance=ExtResource("2_vbxb5")]
@@ -1187,6 +1185,15 @@ offset_left = 8.0
 offset_top = 64.0
 offset_right = 8.0
 offset_bottom = 64.0
+
+[node name="Fade_transition" parent="." instance=ExtResource("4_7djku")]
+visible = false
+offset_left = -504.0
+offset_top = -289.0
+offset_right = 648.0
+offset_bottom = 361.0
+
+[node name="Timer" type="Timer" parent="Fade_transition"]
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
 [connection signal="body_exited" from="Area2D" to="Area2D" method="_on_body_exited"]

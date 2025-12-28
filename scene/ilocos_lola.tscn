@@ -1,7 +1,9 @@
-[gd_scene load_steps=28 format=3 uid="uid://baaktu2ct052u"]
+[gd_scene load_steps=31 format=3 uid="uid://baaktu2ct052u"]
 
+[ext_resource type="Script" uid="uid://cbgtj6xc8w5dg" path="res://scene/ilocos_lola.gd" id="1_hapfl"]
 [ext_resource type="PackedScene" uid="uid://c70awj5gjqkco" path="res://characters/player.tscn" id="1_v7l4x"]
 [ext_resource type="Texture2D" uid="uid://cf4fa8lgfopeh" path="res://art/environment/Interior.png" id="2_cqoj2"]
+[ext_resource type="Script" uid="uid://b8ai6rai0whnl" path="res://characters/player.gd" id="3_2t58o"]
 [ext_resource type="Texture2D" uid="uid://cybmbsu02chtm" path="res://art/environment/interior free.png" id="3_ry41i"]
 [ext_resource type="Texture2D" uid="uid://bug67cyf5d4as" path="res://art/environment/free.png" id="4_46dwb"]
 [ext_resource type="Texture2D" uid="uid://bdmo1kit1thgt" path="res://art/environment/Room_Builder_free_16x16.png" id="5_tvjaw"]
@@ -9,63 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://bupxvc1c2trh7" path="res://art/character/lola.tscn" id="7_ry41i"]
 [ext_resource type="PackedScene" uid="uid://bsjw8xmmcb2yr" path="res://scene/actionable.tscn" id="8_46dwb"]
 [ext_resource type="Resource" uid="uid://crofrx2j8db6h" path="res://dialogue/ilocos/lola.dialogue" id="9_46dwb"]
-
-[sub_resource type="GDScript" id="GDScript_cqoj2"]
-script/source = "extends CharacterBody2D
-
-var speed = 50
-
-var player_state
-
-@onready var actionable_finder: Area2D = $Direction/ActionableFinder
-
-func _unhandled_input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed(\"ui_accept\"):
-		var actionables = actionable_finder.get_overlapping_areas()
-		if actionables.size() > 0:
-			actionables[0].action()
-			return
-
-func _physics_process(_delta):
-	var direction = Input.get_vector(\"left\", \"right\", \"up\", \"down\")
-
-	if direction.x == 0 and direction.y == 0:
-		player_state = \"idle\"
-	elif direction.x != 0 or direction.y != 0:
-		player_state = \"walking\"
-
-	velocity = direction * speed
-	move_and_slide()
-
-	play_anim(direction)
-func play_anim(dir):
-	
-	print(dir)
-	if player_state == \"idle\":
-		$AnimatedSprite2D.play(\"idle\")
-
-	if player_state == \"walking\":
-		if dir.y == -1:
-			$AnimatedSprite2D.play(\"n-walk\")
-		if dir.x == 1:
-			$AnimatedSprite2D.play(\"e-walk\")
-		if dir.y == 1:
-			$AnimatedSprite2D.play(\"s-walk\")
-		if dir.x == -1:
-			$AnimatedSprite2D.play(\"w-walk\")
-			
-		if dir.x>0.5 and dir.y<-0.5:
-			$AnimatedSprite2D.play(\"ne-walk\")
-		if dir.x > 0.5 and dir.y > 0.5:
-			$AnimatedSprite2D.play(\"se-walk\")
-		if dir.x < -0.5 and dir.y > 0.5:
-			$AnimatedSprite2D.play(\"sw-walk\")
-		if dir.x < -0.5 and dir.y < -0.5:
-			$AnimatedSprite2D.play(\"nw-walk\")
-			
-func player():
-	pass
-"
+[ext_resource type="PackedScene" uid="uid://dypo0ck0ketqp" path="res://book/book.tscn" id="11_2t58o"]
+[ext_resource type="PackedScene" uid="uid://dpp0biteryt2p" path="res://scene/Fade_transition.tscn" id="11_iudtq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iudtq"]
 texture = ExtResource("2_cqoj2")
@@ -1921,12 +1868,13 @@ radius = 17.029387
 radius = 12.165525
 
 [node name="ilocos_lola" type="Node2D"]
+script = ExtResource("1_hapfl")
 
 [node name="player" parent="." instance=ExtResource("1_v7l4x")]
 z_index = 4
 position = Vector2(16, 83)
 scale = Vector2(2, 2)
-script = SubResource("GDScript_cqoj2")
+script = ExtResource("3_2t58o")
 
 [node name="Camera2D" type="Camera2D" parent="player"]
 zoom = Vector2(7, 7)
@@ -2024,5 +1972,24 @@ dialogue_resource = ExtResource("9_46dwb")
 position = Vector2(-24, 8)
 shape = SubResource("CircleShape2D_tvjaw")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="book" parent="CanvasLayer" instance=ExtResource("11_2t58o")]
+offset_left = 8.0
+offset_top = 64.0
+offset_right = 8.0
+offset_bottom = 64.0
+
+[node name="Fade_transition" parent="." instance=ExtResource("11_iudtq")]
+visible = false
+z_index = 15
+offset_left = -504.0
+offset_top = -289.0
+offset_right = 648.0
+offset_bottom = 361.0
+
+[node name="Timer" type="Timer" parent="Fade_transition"]
+
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
 [connection signal="body_exited" from="Area2D" to="Area2D" method="_on_body_exited"]
+[connection signal="timeout" from="Fade_transition/Timer" to="." method="_on_timer_timeout"]
